@@ -386,6 +386,7 @@ async function webAppVisible() {
     dbg('webview status:', JSON.stringify(list.map((v) => ({
       id: v.id, URL: v.URL, Status: v.Status, Type: v.Type,
     }))));
+    list.forEach((v) => { if (v.URL && v.URL.includes(WEBAPP_HOST)) ourViewIds.add(v.id); });
     const visible = list.some((v) => v.URL && v.URL.includes(WEBAPP_HOST) && v.Status !== 'NotVisible');
     dbg(`our app (${WEBAPP_HOST}) visible:`, visible);
     return visible;
@@ -395,14 +396,22 @@ async function webAppVisible() {
   }
 }
 
+// Webview ids showing our app. With several touch panels (native RoomOS),
+// one Display call opens one webview per panel, so "visible somewhere" is
+// not enough: closing it on any panel must bring it back.
+const ourViewIds = new Set();
+
 let redisplayTimer = null;
 let redisplayDelay = 0;
 // Closing the webview doubles as the unlock request: when the user closes
 // it, we bring it back AND show the PIN dialog on top.
 let pinAfterRedisplay = false;
+// set when one of our webviews closed — re-display without the visibility check
+let forceRedisplay = false;
 
-function scheduleRedisplayCheck(delayMs, reason) {
+function scheduleRedisplayCheck(delayMs, reason, force = false) {
   if (!externalMode) return;
+  if (force) forceRedisplay = true;
   if (redisplayTimer) {
     if (delayMs >= redisplayDelay) {
       dbg(`check already pending, ignoring trigger (${reason})`);
@@ -416,8 +425,15 @@ function scheduleRedisplayCheck(delayMs, reason) {
   redisplayDelay = delayMs;
   redisplayTimer = setTimeout(async () => {
     redisplayTimer = null;
-    if (externalMode && !(await webAppVisible())) {
-      console.log('External mode: web app not visible, re-displaying');
+    const force = forceRedisplay;
+    forceRedisplay = false;
+    if (externalMode && (force || !(await webAppVisible()))) {
+      console.log(`External mode: web app ${force ? 'closed on a panel' : 'not visible'}, re-displaying`);
+      if (force) {
+        // clear first so panels that still show it don't stack a second copy
+        await xapi.Command.UserInterface.WebView.Clear({ Target: 'Controller' }).catch(() => {});
+        ourViewIds.clear();
+      }
       await showWebApp().catch((e) => console.error('re-display failed', e));
       if (pinAfterRedisplay) {
         pinAfterRedisplay = false;
@@ -433,10 +449,16 @@ function scheduleRedisplayCheck(delayMs, reason) {
 // React immediately when the webview state changes (user closed it) …
 xapi.Status.UserInterface.WebView.on((change) => {
   dbg('status stream event:', JSON.stringify(change));
-  if (change && change.Status === 'NotVisible') {
+  if (!change) return;
+  if (change.URL && change.URL.includes(WEBAPP_HOST)) ourViewIds.add(change.id);
+  if (change.ghost) {
+    ourViewIds.delete(change.id);
+    return;
+  }
+  if (change.Status === 'NotVisible') {
     // a webview just closed — re-display and offer the PIN unlock
     pinAfterRedisplay = true;
-    scheduleRedisplayCheck(0, 'webview closed');
+    scheduleRedisplayCheck(0, 'webview closed', ourViewIds.has(change.id));
   } else {
     scheduleRedisplayCheck(1500, 'status change');
   }
