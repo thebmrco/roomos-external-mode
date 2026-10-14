@@ -22,7 +22,7 @@ import xapi from 'xapi';
 /* ------------------------------------------------------------------ */
 
 const PIN = '1234'; // change this!
-const WEBAPP_URL = 'https://room-external-mode.<your-account>.workers.dev/';
+const WEBAPP_URL = 'https://roomos-external-mode.<your-account>.workers.dev/';
 // must match the HELP_TOKEN secret of the Worker
 const HELP_TOKEN = 'change-me';
 

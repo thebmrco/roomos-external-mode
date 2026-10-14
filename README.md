@@ -82,6 +82,10 @@ For German texts, copy `examples/config.de.json` over `webapp/config.json`.
 Every recipient must be listed in `allowed_destination_addresses` **and** be a
 verified destination address in Email Routing.
 
+To keep real addresses out of a public fork, copy `wrangler.jsonc` to
+`wrangler.local.jsonc` (gitignored), fill it in, and pass `-c wrangler.local.jsonc`
+to the `wrangler` commands below.
+
 ## 2. Deploy to Cloudflare (Worker + static assets)
 
 One-time email setup in the Cloudflare dashboard:
@@ -98,7 +102,7 @@ npx wrangler secret put HELP_TOKEN   # paste it
 npx wrangler deploy
 ```
 
-Note the resulting URL, e.g. `https://room-external-mode.<account>.workers.dev/`
+Note the resulting URL, e.g. `https://roomos-external-mode.<account>.workers.dev/`
 (or attach a custom domain on the zone — recommended, since the sender and the
 app then live on the same domain).
 
