@@ -1,0 +1,82 @@
+{
+  "locale": "en-GB",
+  "timeZone": "Europe/London",
+  "background": "bg.svg",
+  "roomFallback": "Unknown room",
+
+  "text": {
+    "badge": "External mode",
+    "title": "Welcome",
+    "subtitle": "Connect your laptop with the <strong>USB cable on the table</strong> to use the room's screen, camera and microphones.",
+    "sending": "Sending…",
+    "sent": "Requested ✓",
+    "failed": "Could not send",
+    "cancel": "Cancel",
+    "send": "Request",
+    "namePlaceholder": "Your name (optional)",
+    "close": "Close"
+  },
+
+  "services": [
+    {
+      "id": "tech",
+      "label": "Technical support",
+      "icon": "wrench",
+      "prompt": "What can we help with?",
+      "options": ["Display", "Audio", "USB / connection", "Other"],
+      "askName": true
+    },
+    {
+      "id": "catering",
+      "label": "Catering",
+      "icon": "coffee",
+      "prompt": "What can we bring you?",
+      "options": ["Coffee", "Drinks"]
+    },
+    {
+      "id": "cleaning",
+      "label": "Cleaning",
+      "icon": "broom"
+    }
+  ],
+
+  "wifi": {
+    "ssid": "Guest-WiFi",
+    "password": "change-me",
+    "security": "WPA",
+    "label": "Wi-Fi",
+    "hint": "Scan the QR code to connect — tap anywhere to close"
+  },
+
+  "feedback": {
+    "url": "https://example.com/feedback",
+    "embedUrl": "",
+    "label": "Feedback",
+    "caption": "Scan the QR code<br>or tap here",
+    "phoneCaption": "Prefer your phone?<br>Scan the QR code"
+  },
+
+  "email": {
+    "subject": "{service} requested: {room}{issue_suffix}",
+    "body": "A request was made from the touch panel in \"{room}\": {service}.\n\n{issue_line}{name_line}Time: {time}\n",
+    "issueLine": "Request: {issue}\n",
+    "nameLine": "Name: {name}\n"
+  },
+
+  "macro": {
+    "modePanel": "Room mode",
+    "modeInternal": "Room mode: internal",
+    "modeExternal": "Room mode: external 🔒",
+    "switchedExternal": "External mode active.<br>The room is used via USB.",
+    "switchedInternal": "Internal mode active.<br>Normal room control restored.",
+    "pinPrompt": "Enter the PIN to switch the room to {target}",
+    "pinTargetExternal": "EXTERNAL",
+    "pinTargetInternal": "INTERNAL",
+    "pinSubmit": "Switch",
+    "pinWrong": "Wrong PIN",
+    "servicePanel": "Request service",
+    "serviceSent": "{service}{issue_suffix} has been requested.",
+    "serviceFailed": "The request could not be sent.",
+    "nameText": "{issue} – your name (optional)"
+  }
+}

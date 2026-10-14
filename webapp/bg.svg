@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice">
+  <!-- Generic abstract wallpaper: soft colour fields + flowing lines.
+       Replace with your own image (see "background" in config.json). -->
+  <defs>
+    <linearGradient id="base" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b1f3f"/>
+      <stop offset="0.55" stop-color="#0a2a4a"/>
+      <stop offset="1" stop-color="#06303a"/>
+    </linearGradient>
+    <radialGradient id="glowA" cx="0.18" cy="0.22" r="0.55">
+      <stop offset="0" stop-color="#2f7de1" stop-opacity="0.75"/>
+      <stop offset="1" stop-color="#2f7de1" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowB" cx="0.85" cy="0.78" r="0.6">
+      <stop offset="0" stop-color="#11b5a4" stop-opacity="0.6"/>
+      <stop offset="1" stop-color="#11b5a4" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowC" cx="0.72" cy="0.12" r="0.4">
+      <stop offset="0" stop-color="#7b5cff" stop-opacity="0.45"/>
+      <stop offset="1" stop-color="#7b5cff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="line" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#ffffff" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#base)"/>
+  <rect width="1920" height="1080" fill="url(#glowA)"/>
+  <rect width="1920" height="1080" fill="url(#glowB)"/>
+  <rect width="1920" height="1080" fill="url(#glowC)"/>
+
+  <g fill="none" stroke="url(#line)" stroke-width="2">
+    <path d="M-100 760 C 300 620, 620 900, 1000 760 S 1700 560, 2020 700"/>
+    <path d="M-100 800 C 320 670, 640 940, 1010 800 S 1700 610, 2020 745" opacity="0.8"/>
+    <path d="M-100 840 C 340 720, 660 980, 1020 840 S 1700 660, 2020 790" opacity="0.6"/>
+    <path d="M-100 880 C 360 770, 680 1020, 1030 880 S 1700 710, 2020 835" opacity="0.4"/>
+    <path d="M-100 300 C 400 180, 800 420, 1200 280 S 1800 160, 2020 240" opacity="0.35"/>
+    <path d="M-100 340 C 420 230, 820 460, 1210 320 S 1800 210, 2020 285" opacity="0.22"/>
+  </g>
+</svg>

@@ -1,0 +1,84 @@
+{
+  "locale": "de-AT",
+  "timeZone": "Europe/Vienna",
+  "background": "bg.svg",
+  "roomFallback": "Unbekannter Raum",
+  "text": {
+    "badge": "Externer Modus",
+    "title": "Willkommen",
+    "subtitle": "Verbinden Sie Ihren Laptop einfach mit dem <strong>USB&#8209;Kabel am Tisch</strong> – damit nutzen Sie Bildschirm, Kamera und Mikrofone des Raums.",
+    "sending": "Wird gesendet…",
+    "sent": "Angefordert ✓",
+    "failed": "Senden nicht möglich",
+    "cancel": "Abbrechen",
+    "send": "Anfordern",
+    "namePlaceholder": "Ihr Name (optional)",
+    "close": "Schließen"
+  },
+  "services": [
+    {
+      "id": "tech",
+      "label": "Technischer Support",
+      "icon": "wrench",
+      "prompt": "Womit können wir helfen?",
+      "options": [
+        "Bild / Anzeige",
+        "Audio",
+        "USB / Verbindung",
+        "Sonstiges"
+      ],
+      "askName": true
+    },
+    {
+      "id": "catering",
+      "label": "Catering",
+      "icon": "coffee",
+      "prompt": "Was dürfen wir bringen?",
+      "options": [
+        "Kaffee",
+        "Getränke"
+      ]
+    },
+    {
+      "id": "cleaning",
+      "label": "Reinigung",
+      "icon": "broom"
+    }
+  ],
+  "wifi": {
+    "ssid": "Guest-WiFi",
+    "password": "change-me",
+    "security": "WPA",
+    "label": "WLAN",
+    "hint": "QR-Code scannen, um sich zu verbinden — zum Schließen tippen"
+  },
+  "feedback": {
+    "url": "https://example.com/feedback",
+    "embedUrl": "",
+    "label": "Feedback",
+    "caption": "QR-Code scannen<br>oder hier tippen",
+    "phoneCaption": "Lieber am Handy?<br>QR-Code scannen"
+  },
+  "email": {
+    "subject": "{service} angefordert: {room}{issue_suffix}",
+    "body": "Im Raum \"{room}\" wurde über das Touchpanel angefordert: {service}.\n\n{issue_line}{name_line}Zeitpunkt: {time}\n",
+    "issueLine": "Anliegen: {issue}\n",
+    "nameLine": "Name: {name}\n"
+  },
+  "macro": {
+    "modePanel": "Raummodus",
+    "modeInternal": "Raummodus: Intern",
+    "modeExternal": "Raummodus: Extern 🔒",
+    "switchedExternal": "Externer Modus aktiv.<br>Der Raum wird über USB genutzt.",
+    "switchedInternal": "Interner Modus aktiv.<br>Normale Raumsteuerung wiederhergestellt.",
+    "pinPrompt": "PIN eingeben, um den Raum auf {target} umzuschalten",
+    "pinTargetExternal": "EXTERN",
+    "pinTargetInternal": "INTERN",
+    "pinSubmit": "Umschalten",
+    "pinWrong": "Falsche PIN",
+    "servicePanel": "Service anfordern",
+    "serviceSent": "{service}{issue_suffix} wurde angefordert.",
+    "serviceFailed": "Anfrage konnte nicht gesendet werden.",
+    "nameText": "Anliegen: {issue} – Ihr Name (optional)"
+  }
+}

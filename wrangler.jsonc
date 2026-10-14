@@ -1,0 +1,33 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "room-external-mode",
+  "main": "src/worker.js",
+  "compatibility_date": "2026-07-01",
+  "assets": {
+    "directory": "./webapp",
+    // lets the Worker read config.json
+    "binding": "ASSETS"
+  },
+  // Email Routing send binding. Every recipient used in the vars below must
+  // be listed here AND be a verified destination address in Email Routing.
+  "send_email": [
+    {
+      "name": "HELP_EMAIL",
+      "allowed_destination_addresses": [
+        "facilities@example.com"
+      ]
+    }
+  ],
+  "vars": {
+    // sender — any address on the zone where Email Routing is enabled
+    "HELP_FROM": "rooms@example.com",
+    // fallback recipient for every service without its own address
+    "HELP_TO": "facilities@example.com"
+    // per-service recipients: HELP_TO_<service id in upper case>, e.g.
+    // "HELP_TO_TECH": "it-support@example.com",
+    // "HELP_TO_CATERING": "catering@example.com",
+    // "HELP_TO_CLEANING": "housekeeping@example.com"
+    //
+    // HELP_TOKEN is a secret: `npx wrangler secret put HELP_TOKEN`
+  }
+}
