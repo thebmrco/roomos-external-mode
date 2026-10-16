@@ -14,6 +14,8 @@
  *
  * The mode survives reboots (state is kept in a helper macro) and the web
  * view is re-opened automatically if someone manages to dismiss it.
+ * INITIAL_EXTERNAL_MODE sets the mode for the very first start, before any
+ * state has been saved; EXTERNAL_ON_BOOT forces external mode on every start.
  */
 import xapi from 'xapi';
 
@@ -25,6 +27,11 @@ const PIN = '1234'; // change this!
 const WEBAPP_URL = 'https://roomos-external-mode.<your-account>.workers.dev/';
 // must match the HELP_TOKEN secret of the Worker
 const HELP_TOKEN = 'change-me';
+// mode on the very first start (no saved state yet): true → external
+const INITIAL_EXTERNAL_MODE = false;
+// true → always switch to external mode when the macro starts (device boot,
+// but also after saving or restarting the macro)
+const EXTERNAL_ON_BOOT = false;
 
 const DEBUG = false; // verbose logging of the webview status stream / watchdog
 
@@ -85,12 +92,13 @@ async function loadConfig() {
 /* State persistence (stored as a comment in an inactive helper macro)  */
 /* ------------------------------------------------------------------ */
 
+// null if nothing has been saved yet (first start)
 async function loadState() {
   try {
     const result = await xapi.Command.Macros.Macro.Get({ Name: STORAGE_MACRO, Content: 'True' });
     return JSON.parse(result.Macro[0].Content.replace(/^\/\/\s*/, ''));
   } catch (e) {
-    return { external: false };
+    return null;
   }
 }
 
@@ -484,9 +492,19 @@ async function applyConfig() {
 }
 
 async function init() {
-  const state = await loadState();
+  let state = await loadState();
+  if (!state) {
+    state = { external: INITIAL_EXTERNAL_MODE };
+    await saveState(state).catch((e) => console.error('saving state failed:', e.message));
+  }
+  if (EXTERNAL_ON_BOOT && !state.external) {
+    console.log('Starting in external mode (EXTERNAL_ON_BOOT)');
+    state = { external: true };
+    await saveState(state).catch((e) => console.error('saving state failed:', e.message));
+  }
   externalMode = !!state.external;
-  await updatePanel(externalMode);
+  // UI may not be ready right after boot; applyConfig updates the panel again
+  await updatePanel(externalMode).catch((e) => console.error('mode panel failed:', e.message));
   // required for config.json and the service-request HTTP calls
   await xapi.Config.HttpClient.Mode.set('On').catch(() => {});
   if (externalMode) {

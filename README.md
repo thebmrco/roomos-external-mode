@@ -130,6 +130,13 @@ service requests from the Control Panel (the macro also tries to enable it).
    - `PIN` — the manager's PIN (default `1234`, change it).
    - `WEBAPP_URL` — your Worker URL.
    - `HELP_TOKEN` — the token from step 2.
+   - `INITIAL_EXTERNAL_MODE` — mode on the very first start, before any
+     state is saved: `true` → external, `false` (default) → internal. After
+     that the last mode is always restored. To apply it again, delete the
+     `ExternalModeState` macro and restart the macro.
+   - `EXTERNAL_ON_BOOT` — set to `true` to always switch to external mode
+     when the macro starts: after every device boot, but also after saving or
+     restarting the macro. Default `false`: the last mode is restored.
 4. Save and enable the macro.
 
 A "Room mode" button appears in the Navigator **Control Panel** (swipe from
